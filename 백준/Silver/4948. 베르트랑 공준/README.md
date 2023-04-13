@@ -1,14 +1,14 @@
-# [Silver III] 베르트랑 공준 - 4948 
+# [Silver II] 베르트랑 공준 - 4948 
 
 [문제 링크](https://www.acmicpc.net/problem/4948) 
 
 ### 성능 요약
 
-메모리: 32952 KB, 시간: 1368 ms
+메모리: 2692 KB, 시간: 116 ms
 
 ### 분류
 
-수학(math), 정수론(number_theory), 소수 판정(primality_test), 에라토스테네스의 체(sieve)
+수학, 정수론, 소수 판정, 에라토스테네스의 체
 
 ### 문제 설명
 
