@@ -8,12 +8,12 @@
 
 def solution(phone_book):
     dic = {}
-    for phone_number in phone_book:
-        dic[phone_number] = 1
-    for phone_number in phone_book:
-        temp = ""
-        for number in phone_number:
-            temp += number
-            if temp in dic and temp != phone_number:
+    for num in phone_book:
+        dic[num] = 1
+    for num in phone_book:
+        tmp = ""
+        for i in num:
+            tmp += i
+            if tmp in dic and tmp != num:
                 return False
     return True
