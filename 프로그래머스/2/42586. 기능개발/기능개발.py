@@ -9,7 +9,9 @@ def solution(progresses, speeds):
         cnt = 0
         
         while progresses and progresses[0] >= 100:
-            del progresses[0], speeds[0]
+            progresses.pop(0)
+            speeds.pop(0)
+            # del progresses[0], speeds[0]
             cnt += 1
         
         if cnt > 0:
