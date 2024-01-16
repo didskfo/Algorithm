@@ -2,7 +2,6 @@ import heapq
 
 def solution(scoville, K):
     answer = 0
-    len_scoville = len(scoville)
     heapq.heapify(scoville)
     while len(scoville)>1:
         if scoville[0] >= K:
@@ -14,6 +13,7 @@ def solution(scoville, K):
     if scoville[0] < K:
         return -1
     return answer
+    # len_scoville = len(scoville)
     # if len_scoville == 2:
     #     if scoville[0]+scoville[1]*2 >= K:
     #         return 1
