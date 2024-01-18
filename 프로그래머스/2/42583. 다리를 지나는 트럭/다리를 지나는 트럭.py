@@ -8,12 +8,11 @@ def solution(bridge_length, weight, truck_weights):
     
     while truck_que:
         sum_weights += truck_que[0]
-        if truck_que:
-            if sum_weights <= weight:
-                bridge.append(truck_que.popleft())
-            else:
-                sum_weights -= truck_que[0]
-                bridge.append(0)
+        if sum_weights <= weight:
+            bridge.append(truck_que.popleft())
+        else:
+            sum_weights -= truck_que[0]
+            bridge.append(0)
         sum_weights -= bridge.popleft()
         answer += 1
         
