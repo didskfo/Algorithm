@@ -5,9 +5,9 @@ class Solution {
         String even = "";
         for (int i : num_list) {
             if (i%2 != 0) {
-                odd += Integer.toString(i);
+                odd += i;
             } else {
-                even += Integer.toString(i);
+                even += i;
             }
         }
         answer += Integer.parseInt(odd) + Integer.parseInt(even);
