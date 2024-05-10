@@ -25,8 +25,9 @@ class Solution {
             }
         }
                 
-        List<Integer> list = Arrays.stream(stu).boxed().collect(Collectors.toList());        
-        int cnt_0 = Collections.frequency(list, 0);
-        return n-cnt_0;
+        for (int i : stu) {
+            if (i == 0) n--; 
+        }
+        return n;
     }
 }
