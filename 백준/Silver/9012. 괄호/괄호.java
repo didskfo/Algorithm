@@ -6,23 +6,21 @@ class Main {
         int n = Integer.parseInt(sc.nextLine());
         for (int t = 0; t < n; t++) {
             String str = sc.nextLine();
-            Stack<Character> st = new Stack<>();
-            boolean check = true;
+            int check = 0;
+            boolean bool = true;
             for (int i = 0; i < str.length(); i++) {
-                if (str.charAt(i) == '(') {
-                    st.add(str.charAt(i));
-                } else {
-                    if (st.isEmpty()) {
+                if (str.charAt(i) == '(') check++;
+                else {
+                    if (check == 0) {
                         System.out.println("NO");
-                        check = false;
+                        bool = false;
                         break;
-                    } else st.pop();
+                    }
+                    else check--;
                 }
             }
-            if (check) {
-                if (!st.isEmpty()) System.out.println("NO");
-                else System.out.println("YES");
-            }
+            if (bool && check != 0) System.out.println("NO");
+            else if (bool && check == 0) System.out.println("YES");
         }
     }
 }
