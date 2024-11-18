@@ -3,73 +3,48 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
-
-    public static int find(int u, int[] parent) {
-
-        if (parent[u] == -1) {
-            return u;
-        }
-
-        int v = u;
-
-        while (parent[u] != -1) {
-            u = parent[u];
-        }
-
-        int p;
-        while (parent[v] != u) {
-            p = parent[v];
-            parent[v] = u;
-            v = p;
-        }
-
-        return u;
-    }
-
-    public static void main(String[] args) throws IOException {
-
+class Main {
+    static int n, m;
+    static int[] parent;
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-
-        int[] parent = new int[n+1];
-        for (int i = 0; i < parent.length; i++) {
-            parent[i] = -1;
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        parent = new int[n+1];
+        for (int i = 0; i < n+1; i++) {
+            parent[i] = i;
         }
-
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < m; i++) {
-            StringTokenizer st2 = new StringTokenizer(br.readLine());
-            int c = Integer.parseInt(st2.nextToken());
-            int u = Integer.parseInt(st2.nextToken());
-            int v = Integer.parseInt(st2.nextToken());
-
-            if (c == 0) {
-                //union
-                int ur = find(u, parent);
-                int vr = find(v, parent);
-
-                if (ur != vr) {
-                    parent[vr] = ur;
-                }
+            st = new StringTokenizer(br.readLine(), " ");
+            int ch = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            if (ch == 0) {
+                union(a, b);
             } else {
-                //find, find, check, print
-                if (u == v) {
-                    System.out.println("YES");
-                    continue;
-                }
-
-                int ur = find(u, parent);
-                int vr = find(v, parent);
-
-                if (ur == vr) {
-                    System.out.println("YES");
-                } else {
-                    System.out.println("NO");
-                }
+                int ap = find(a);
+                int bp = find(b);
+                if (ap == bp) sb.append("YES\n");
+                else sb.append("NO\n");
             }
         }
+        System.out.println(sb.toString());
+    }
+
+    static void union(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x == y) return;
+        if (x <= y) parent[y] = x;
+        else parent[x] = y;
+    }
+
+    static int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
     }
 }
