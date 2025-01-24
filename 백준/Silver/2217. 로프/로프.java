@@ -2,21 +2,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
 
 class Main {
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        Integer[] arr = new Integer[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            int N = Integer.parseInt(br.readLine());
+            int[] arr = new int[N];
+            for (int i = 0; i < N; i++) {
+                arr[i] = Integer.parseInt(br.readLine());
+            }
+            Arrays.sort(arr);
+    
+            int maxWeight = 0;
+            for (int i = 0; i < N; i++) {
+                if (maxWeight < arr[N-i-1]*(i+1)) {
+                    maxWeight = arr[N-i-1]*(i+1);
+                }
+            }
+            System.out.println(maxWeight);
         }
-        Arrays.sort(arr, Collections.reverseOrder());
-        int max = 0;
-        for (int i = 0; i < n; i++) {
-            max = Math.max(max, arr[i]*(i+1));
-        }
-        System.out.println(max);
     }
 }
