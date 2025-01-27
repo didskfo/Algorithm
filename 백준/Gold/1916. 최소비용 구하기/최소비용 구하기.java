@@ -1,111 +1,69 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class Main {
-
-    public static int inf = Integer.MAX_VALUE;
-    public static int[][] graph;
-    public static int n, m;
-    public static int cur;
-    public static int[] s;
-    public static long[] d;
-
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-
-        n = Integer.parseInt(bf.readLine());
-        m = Integer.parseInt(bf.readLine());
-
-        graph = new int[n][n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-//                if (i == j) {
-//                    graph[i][j] = 0;
-//                    continue;
-//                }
-                graph[i][j] = inf;
-            }
+class Main {
+    static class Node implements Comparable<Node>{
+        int dest;
+        int cost;
+        public Node(int dest, int cost) {
+            this.dest = dest;
+            this.cost = cost;
         }
-
-        int u, v, w;
-        StringTokenizer st;
-
-        s = new int[n];
-        d = new long[n];
-        Arrays.fill(s, 0);
-        Arrays.fill(d, inf);
-
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(bf.readLine());
-            u = Integer.parseInt(st.nextToken());
-            v = Integer.parseInt(st.nextToken());
-            w = Integer.parseInt(st.nextToken());
-
-            if (graph[u-1][v-1] == inf) {
-                graph[u-1][v-1] = w;
-            } else if (graph[u-1][v-1] > w) {
-                graph[u-1][v-1] = w;
-            }
+        @Override
+        public int compareTo(Node n) {
+            return Integer.compare(this.cost, n.cost);
         }
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < n; j++) {
-//                System.out.print(graph[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
-
-        st = new StringTokenizer(bf.readLine());
-        int start = Integer.parseInt(st.nextToken());
-        int end = Integer.parseInt(st.nextToken());
-
-        dijkstra(start);
-        System.out.println(d[end-1]);
-
+    }
+    static int N, M, start, end;
+    static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
+    static boolean[] visit;
+    static int[] dist;
+    public static void main(String[] args) throws IOException{
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            N = Integer.parseInt(br.readLine());
+            M = Integer.parseInt(br.readLine());
+            visit = new boolean[N+1];
+            dist = new int[N+1];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            for (int i = 0; i <= N; i++) {
+                graph.add(new ArrayList<>());
+            }
+            StringTokenizer st;
+            for (int i = 0; i < M; i++) {
+                st = new StringTokenizer(br.readLine(), " ");
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());
+                int c = Integer.parseInt(st.nextToken());
+                graph.get(a).add(new Node(b, c));
+            }
+            st = new StringTokenizer(br.readLine(), " ");
+            start = Integer.parseInt(st.nextToken());
+            end = Integer.parseInt(st.nextToken());
+            dist[start] = 0;
+            dijkstra();
+            System.out.println(dist[end]);
+        }
     }
 
-    public static int findMin() {
-        long min = inf;
-        cur = 0;
-        for (int i = 0; i < n; i++) {
-            if (d[i] < min && s[i] == 0) {
-                min = d[i];
-                cur = i;
-            }
-        }
-//        System.out.println("findmin" + cur);
-        return cur;
-    }
-
-    public static void dijkstra(int start) {
-        d[start-1] = 0;
-        for (int i = 0; i < n; i++) {
-//            System.out.print("graph[start][i]" + graph[start][i]);
-//            System.out.print("d[i]" + d[i]);
-//            System.out.println();
-            if (graph[start-1][i] < d[i]) {
-                d[i] = graph[start-1][i];
-            }
-        }
-//        for (int i = 0; i < n; i++) {
-//            System.out.print(d[i] + " ");
-//        }
-        s[start-1] = 1;
-        for (int i = 0; i < n; i++) {
-            int idx = findMin();
-            s[idx] = 1;
-            for (int j = 0; j < n; j++) {
-                if (d[idx] + graph[idx][j] < d[j]) {
-                    d[j] = d[idx] + graph[idx][j];
+    static void dijkstra() {
+        PriorityQueue<Node> que = new PriorityQueue<>();
+        que.offer(new Node(start, 0));
+        while (!que.isEmpty()) {
+            int cur = que.poll().dest;
+            if (!visit[cur]) {
+                visit[cur] = true;
+                for (Node node : graph.get(cur)) {
+                    if (dist[node.dest] > dist[cur] + node.cost) {
+                        dist[node.dest] = dist[cur] + node.cost;
+                        que.add(new Node(node.dest, dist[node.dest]));
+                    }
                 }
             }
         }
-//        for (int i = 0; i < n; i++) {
-//            System.out.print(s[i] + " ");
-//        }
     }
 }
