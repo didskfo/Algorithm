@@ -2,20 +2,15 @@ import java.util.*;
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        HashMap<String, Integer> hm1 = new HashMap<String, Integer>();
-        HashMap<String, Integer> hm2 = new HashMap<String, Integer>();
-        for (String a : participant) {
-            hm1.put(a, hm1.getOrDefault(a, 0)+1);
+        HashMap<String, Integer> comp = new HashMap<>();
+        for (String com : completion) {
+            comp.put(com, comp.getOrDefault(com, 0)+1);
         }
-        for (String b : completion) {
-            hm2.put(b, hm2.getOrDefault(b, 0)+1);
+        for (String par : participant) {
+            int cnt = comp.getOrDefault(par, 0);
+            comp.put(par, cnt-1);
+            if (comp.get(par) == -1) return par;
         }
-        for (String key: hm1.keySet()) {
-			int value1 = hm1.get(key);
-            int value2 = hm2.getOrDefault(key, 0);
-            if (value2 == 0) return key;
-			if (value1 != value2) return key;	
-		}
         return "";
     }
 }
