@@ -1,17 +1,18 @@
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        char[] arr = s.toCharArray();
-        Stack<Character> st = new Stack<>();
-        for (char a : arr) {
-            if (a == '(') st.push('(');
-            else {
-                if (st.isEmpty()) return false;
-                st.pop();
+        Deque<Character> que = new ArrayDeque<>();
+        char[] str = s.toCharArray();
+        for (char c : str) {
+            if (c == '(') {
+                que.offer(c);
+            } else {
+                if (que.isEmpty()) return false;
+                que.poll();
             }
         }
-        if (!st.isEmpty()) return false;
+        if (!que.isEmpty()) return false;
         return true;
     }
 }
