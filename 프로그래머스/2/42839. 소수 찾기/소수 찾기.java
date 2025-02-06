@@ -1,83 +1,48 @@
 import java.util.*;
 
 class Solution {
+    static char[] arr;
+    static Set<Integer> set = new HashSet<>();
+    static boolean[] visited;
+    static char[] selected;
     public int solution(String numbers) {
         int answer = 0;
-        List<String> combinations = generateCombinations(numbers);
-        List<String> result = new ArrayList<>();
-
-        for (String combination : combinations) {
-            result.add(combination); 
-            if (combination.length() > 1) {
-                result.addAll(generatePermutations(combination)); 
-            }
+        arr = numbers.toCharArray();
+        visited = new boolean[arr.length];
+        for (int i = 1; i <= arr.length; i++) {
+            selected = new char[i];
+            permutation(i, 0);
         }
-        List<Integer> intResult = toIntegerList(result); 
-        Set<Integer> uniqueSet = new HashSet<>(intResult);
-        List<Integer> uniqueList = new ArrayList<>(uniqueSet);
-        System.out.println(uniqueList);
-        for (int i : uniqueList) {
-            if (i != 0 && i != 1 && isPrime(i) == 1) answer++;
+        for (Integer s : set) {
+            if (isPrime(s)) answer++;
         }
         return answer;
     }
     
-    public int isPrime(int n) {
-        for (int i = 2; i<=(int)Math.sqrt(n); i++) {
-          if (n % i == 0) {
-              return 0;
-          }
-        }
-        return 1;
-    }
-
-    public static List<String> generateCombinations(String str) {
-        List<String> combinations = new ArrayList<>();
-        int n = str.length();
-
-        for (int i = 1; i < (1 << n); i++) {
-            StringBuilder combination = new StringBuilder();
-            for (int j = 0; j < n; j++) {
-                if ((i & (1 << j)) != 0) { 
-                    combination.append(str.charAt(j));
-                }
+    static void permutation(int len, int cnt) {
+        if (cnt == len) {
+            String num = "";
+            for (int i = 0; i < len; i++) {
+                num += String.valueOf(selected[i]);
             }
-            combinations.add(combination.toString());
-        }
-
-        return combinations;
-    }
-
-    public static List<String> generatePermutations(String str) {
-        List<String> permutations = new ArrayList<>();
-        permute(str.toCharArray(), 0, permutations);
-        return permutations;
-    }
-
-    private static void permute(char[] arr, int index, List<String> permutations) {
-        if (index == arr.length - 1) {
-            permutations.add(new String(arr));
+            set.add(Integer.parseInt(num));
             return;
         }
-        
-        for (int i = index; i < arr.length; i++) {
-            swap(arr, index, i);
-            permute(arr, index + 1, permutations);
-            swap(arr, index, i); 
+        for (int i = 0; i < arr.length; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                selected[cnt] = arr[i];
+                permutation(len, cnt+1);
+                visited[i] = false;
+            }
         }
     }
-
-    private static void swap(char[] arr, int i, int j) {
-        char temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    } 
     
-    public static List<Integer> toIntegerList(List<String> strList) {
-        List<Integer> intList = new ArrayList<>();
-        for (String str : strList) {
-            intList.add(Integer.parseInt(str)); 
+    static boolean isPrime(int n) {
+        if (n == 0 || n == 1) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) return false;
         }
-        return intList;
+        return true;
     }
 }
