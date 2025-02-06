@@ -2,15 +2,12 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] citations) {
-        Integer[] arr = Arrays.stream(citations).boxed().toArray(Integer[]::new); 
-        Arrays.sort(arr, Collections.reverseOrder());
-        int idx = 0;
-        for (int i : arr) {
-            if (i <= idx+1) {
-                return Math.max(i, idx);
+        Arrays.sort(citations);
+        for (int i = 0; i < citations.length; i++) {
+            if (i+1 >= citations[citations.length-i-1]) {
+                return Math.max(i, citations[citations.length-i-1]);
             }
-            idx++;
         }
-        return arr.length;
+        return citations.length;
     }
 }
