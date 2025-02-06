@@ -3,19 +3,16 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
-        int cur;
-        int cnt;
-        int idx = 0;
-        Deque<Integer> que = new ArrayDeque<>();
-        for (int i : prices) que.add(i);
-        while (!que.isEmpty()) {
-            cur = que.poll();
-            cnt = 0;
-            for (int q : que) {
+        for (int i = 0; i < prices.length; i++) {
+            int cur = prices[i];
+            int cnt = 0;
+            for (int j = i+1; j < prices.length; j++) {
                 cnt++;
-                if (cur > q) break;
+                if (cur > prices[j]) {
+                    break;
+                } 
             }
-            answer[idx++] = cnt;
+            answer[i] = cnt;
         }
         return answer;
     }
