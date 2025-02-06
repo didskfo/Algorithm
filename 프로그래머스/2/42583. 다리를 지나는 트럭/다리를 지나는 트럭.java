@@ -3,23 +3,24 @@ import java.util.*;
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 0;
-        int sum = 0;
-        Deque<Integer> que = new ArrayDeque<>();
-        Deque<Integer> bri = new ArrayDeque<>();
-        for (int i : truck_weights) que.add(i);
-        Integer[] init = new Integer[bridge_length-1];
-        Arrays.fill(init, 0);
-        bri.addAll(Arrays.asList(init));
-        while (!que.isEmpty()) {
-            sum += que.peek();
-            if (sum <= weight) bri.add(que.poll());
-            else {
-                sum -= que.peek();
-                bri.add(0);
-            }
-            sum -= bri.poll();
-            answer += 1;
+        Deque<Integer> truck = new ArrayDeque<>();
+        Deque<Integer> bridge = new ArrayDeque<>(Collections.nCopies(bridge_length-1, 0));
+        for (int t : truck_weights) {
+            truck.offer(t);
         }
-        return answer+bri.size()+1;
+        
+        int wei = 0;
+        while (!truck.isEmpty()) {
+            wei += truck.peek();
+            if (wei > weight) {
+                wei -= truck.peek();
+                bridge.offer(0);
+            } else {
+                bridge.offer(truck.poll());
+            }
+            wei -= bridge.poll();
+            answer++;
+        }
+        return answer+bridge.size()+1;
     }
 }
