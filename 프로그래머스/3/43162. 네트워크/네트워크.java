@@ -1,36 +1,43 @@
 import java.util.*;
 
 class Solution {
-    static Integer[] parent;
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static boolean[] visit;
     public int solution(int n, int[][] computers) {
-        parent = new Integer[n+1];
-        for (int i = 0; i < n+1; i++) {
-            parent[i] = i;
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
         }
         for (int i = 0; i < computers.length; i++) {
-            for (int j = 0; j < computers[0].length; j++) {
+            for (int j = 0; j < computers[i].length; j++) {
                 if (computers[i][j] == 1) {
-                    if (i == j) continue;
-                    union(i+1, j+1);
+                    graph.get(i).add(j);
+                    graph.get(j).add(i);
                 }
             }
         }
-        Set<Integer> set = new HashSet<Integer>();
-        for (int a : parent) set.add(find(a));
-        return set.size()-1;
+        visit = new boolean[n];
+        int answer = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visit[i]) {
+                answer++;
+                bfs(i);
+            }
+        }
+        return answer;
     }
     
-    public boolean union(int x, int y) {
-        x = find(x);
-        y = find(y);
-        if (x == y) return false;
-        if (x < y) parent[y] = x;
-        else parent[x] = y;
-        return true;
-    }
-    
-    public int find(int x) {
-        if (parent[x] == x) return x;
-        return find(parent[x]);
+    static void bfs(int start) {
+        visit[start] = true;
+        Queue<Integer> que = new LinkedList<>();
+        que.add(start);
+        while (!que.isEmpty()) {
+            int cur = que.poll();
+            for (int a : graph.get(cur)) {
+                if (!visit[a]) {
+                    que.add(a);
+                    visit[a] = true;
+                }
+            }
+        }
     }
 }
