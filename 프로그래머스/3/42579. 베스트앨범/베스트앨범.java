@@ -1,38 +1,34 @@
 import java.util.*;
 
 class Solution {
+    static class Song {
+        int play;
+        int num;
+        public Song (int play, int num) {
+            this.play = play;
+            this.num = num;
+        }
+    }
     public int[] solution(String[] genres, int[] plays) {
-        ArrayList<Integer> answer = new ArrayList<>();
-        HashMap<String, Integer> total = new HashMap<>();
-        HashMap<String, HashMap<Integer, Integer>> music = new HashMap<>();
-        
+        HashMap<String, ArrayList<Song>> map = new HashMap<>();
+        HashMap<String, Integer> count = new HashMap<>();
         for (int i = 0; i < genres.length; i++) {
-            if (total.containsKey(genres[i])) {
-                total.put(genres[i], total.get(genres[i])+plays[i]);
-                music.get(genres[i]).put(i, plays[i]);
-            } else {
-                total.put(genres[i], plays[i]);
-                HashMap<Integer, Integer> map = new HashMap<>();
-                map.put(i, plays[i]);
-                music.put(genres[i], map);
-            }
+            map.computeIfAbsent(genres[i], k -> new ArrayList<>()).add(new Song(plays[i], i));
+            count.put(genres[i], count.getOrDefault(genres[i], 0)+plays[i]);
         }
-        
-        List<String> keySet = new ArrayList<>(total.keySet());
-        Collections.sort(keySet, (k1, k2) -> total.get(k2) - total.get(k1));
-        
+        int[] cnt = new int[count.size()];
+        ArrayList<Integer> answer = new ArrayList<>();
+        List<String> keySet = new ArrayList<>(count.keySet());
+        keySet.sort((c1, c2) -> count.get(c2).compareTo(count.get(c1)));
         for (String key : keySet) {
-            HashMap<Integer, Integer> map = music.get(key);
-            List<Integer> key_idx = new ArrayList<>(map.keySet());
-            Collections.sort(key_idx, (k1, k2) -> map.get(k2) - map.get(k1));
-            
-            if (key_idx.size() > 1) {
-                answer.add(key_idx.get(0));
-                answer.add(key_idx.get(1));
-            } else {
-                answer.add(key_idx.get(0));
+            ArrayList<Song> list = map.get(key);
+            if (list.size() < 2) answer.add(list.get(0).num);
+            else {
+                list.sort((l1, l2) -> l2.play - l1.play);
+                answer.add(list.get(0).num);
+                answer.add(list.get(1).num);
             }
         }
-        return answer.stream().mapToInt(i -> i).toArray();
+        return answer.stream().mapToInt(i->i).toArray();
     }
 }
