@@ -2,29 +2,24 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        int[] answer = {0, 0};
         PriorityQueue<Integer> que1 = new PriorityQueue<>();
-        PriorityQueue<Integer> que2 = new PriorityQueue<Integer>(Collections.reverseOrder());
-        int max, min;
-        
+        PriorityQueue<Integer> que2 = new PriorityQueue<>(Collections.reverseOrder());
         for (String operation : operations) {
-            String[] arr = operation.split(" ");
-            if (arr[0].equals("I")) {
-                que1.add(Integer.parseInt(arr[1]));
-                que2.add(Integer.parseInt(arr[1]));
-            } else if(!que1.isEmpty() && arr[0].equals("D") && arr[1].equals("1")) {
-                max = que2.poll();
-                que1.remove(max);
-            } else if (!que1.isEmpty() && arr[0].equals("D") && arr[1].equals("-1")){
-                min = que1.poll();
-                que2.remove(min);
+            String[] str = operation.split(" ");
+            if (str[0].equals("I")) {
+                que1.offer(Integer.parseInt(str[1]));
+                que2.offer(Integer.parseInt(str[1]));
+            } else {
+                if (!que1.isEmpty() && Integer.parseInt(str[1]) == 1) {
+                    int max = que2.poll();
+                    que1.remove(max);
+                } else if (!que1.isEmpty()){
+                    int min = que1.poll();
+                    que2.remove(min);
+                }
             }
         }
-        
-        if (!que1.isEmpty()) {
-            answer[0] = que2.poll();
-            answer[1] = que1.poll();
-        } 
-        return answer;
+        if (que1.isEmpty()) return new int[]{0, 0};
+        else return new int[]{que2.poll(), que1.poll()};
     }
 }
