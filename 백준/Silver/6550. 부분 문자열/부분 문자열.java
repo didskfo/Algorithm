@@ -6,21 +6,21 @@ import java.util.StringTokenizer;
 class Main {
     public static void main(String[] args) throws IOException{
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            String pattern;
-            String text;
+            String s;
+            String t;
             StringTokenizer st;
             StringBuilder sb = new StringBuilder();
             String str;
             while ((str = br.readLine()) != null) {
                 st = new StringTokenizer(str, " ");
-                pattern = st.nextToken();
-                text = st.nextToken();
+                s = st.nextToken();
+                t = st.nextToken();
                 int idx = 0;
-                for (int i = 0; i < text.length(); i++) {
-                    if (pattern.charAt(idx) == text.charAt(i)) idx++;
-                    if (idx == pattern.length()) break;
+                for (int i = 0; i < t.length(); i++) {
+                    if (s.charAt(idx) == t.charAt(i)) idx++;
+                    if (idx == s.length()) break;
                 }
-                sb.append(idx == pattern.length() ? "Yes" : "No").append("\n");
+                sb.append(idx == s.length() ? "Yes" : "No").append("\n");
             }
             System.out.print(sb);
         }
