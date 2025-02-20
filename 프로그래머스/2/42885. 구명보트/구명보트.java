@@ -3,8 +3,8 @@ import java.util.*;
 class Solution {
     public int solution(int[] people, int limit) {
         int answer = 0;
-        Arrays.sort(people);
         Deque<Integer> que = new ArrayDeque<>();
+        Arrays.sort(people);
         for (int p : people) {
             que.add(p);
         }
@@ -13,7 +13,7 @@ class Solution {
                 answer++;
                 break;
             }
-            if (que.getFirst() + que.getLast() <= limit) {
+            if (que.peek() + que.peekLast() <= limit) {
                 que.poll();
                 que.pollLast();
             } else {
