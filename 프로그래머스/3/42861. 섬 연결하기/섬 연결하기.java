@@ -1,39 +1,35 @@
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
-    public int[] parent;
+    static int[] parent;
     public int solution(int n, int[][] costs) {
         int answer = 0;
         parent = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
         }
-        
-        Arrays.sort(costs, (o1, o2) -> o1[2] - o2[2]);
-        for (int i = 0; i < costs.length; i++) {
-            int a = costs[i][0];
-            int b = costs[i][1];
-            int cost = costs[i][2];
+        Arrays.sort(costs, (c1, c2) -> c1[2] - c2[2]);
+        for (int[] cost : costs) {
+            int a = cost[0];
+            int b = cost[1];
+            int c = cost[2];
             if (find(a) != find(b)) {
                 union(a, b);
-                answer += cost;
+                answer += c;
             }
         }
         return answer;
     }
     
-    public int find(int a) {
-        if (parent[a] == a) return a;
-        else return find(parent[a]);
+    static int find(int a) {
+        if (a == parent[a]) return a;
+        return find(parent[a]);
     }
     
-    public void union(int a, int b) {
+    static void union(int a, int b) {
         a = find(a);
         b = find(b);
-        if (a > b) {
-            parent[a] = b;
-        } else {
-            parent[b] = a;
-        }
+        if (a > b) parent[a] = b;
+        else parent[b] = a;
     }
 }
