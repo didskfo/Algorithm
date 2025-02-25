@@ -14,10 +14,6 @@ class Solution {
                 else dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j];
             }
         }
-        int max = 0;
-        for (int i = 0; i < dp.length-1; i++) {
-            max = Math.max(max, dp[dp.length-1][i]);
-        }
-        return max;
+        return Arrays.stream(dp[dp.length-1]).max().getAsInt();
     }
 }
