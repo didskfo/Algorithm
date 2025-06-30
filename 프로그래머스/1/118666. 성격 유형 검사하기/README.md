@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 10.3 MB, 시간: 0.17 ms
+메모리: 73.8 MB, 시간: 1.37 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2023년 12월 5일 13:45:12
+2025년 06월 30일 16:45:59
 
 ### 문제 설명
 
@@ -127,11 +127,12 @@
 <li><code>survey[i]</code>의 첫 번째 캐릭터는 i+1번 질문의 비동의 관련 선택지를 선택하면 받는 성격 유형을 의미합니다. </li>
 <li><code>survey[i]</code>의 두 번째 캐릭터는 i+1번 질문의 동의 관련 선택지를 선택하면 받는 성격 유형을 의미합니다.</li>
 </ul></li>
-<li><p><code>choices</code>의 길이 = <code>survey</code>의 길이</p>
+<li><code>choices</code>의 길이 = <code>survey</code>의 길이
 
 <ul>
 <li><code>choices[i]</code>는 검사자가 선택한 i+1번째 질문의 선택지를 의미합니다.</li>
 <li>1 ≤ <code>choices</code>의 원소 ≤ 7</li>
+</ul></li>
 </ul>
 <table class="table">
         <thead><tr>
@@ -168,9 +169,7 @@
 <td>매우 동의</td>
 </tr>
 </tbody>
-      </table></li>
-</ul>
-
+      </table>
 <hr>
 
 <h5>입출력 예</h5>
