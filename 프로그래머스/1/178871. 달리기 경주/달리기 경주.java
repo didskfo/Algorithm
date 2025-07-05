@@ -14,11 +14,7 @@ class Solution {
             map.put(call, idx-1);
             map.put(player, idx);
         }
-        String[] answer = new String[len];
-        for (String p : players) {
-            int idx = map.get(p);
-            answer[idx] = p;
-        }
+        
         return players;
     }
 }
