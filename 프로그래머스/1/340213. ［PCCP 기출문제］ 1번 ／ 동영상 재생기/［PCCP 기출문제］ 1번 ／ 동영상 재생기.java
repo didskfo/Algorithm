@@ -10,7 +10,7 @@ class Solution {
             }
             if (com.equals("prev")) {
                 cur = Math.max(0, cur-10);
-            } else if (com.equals("next")) {
+            } else {
                 cur = Math.min(len, cur+10);
             }
         }
