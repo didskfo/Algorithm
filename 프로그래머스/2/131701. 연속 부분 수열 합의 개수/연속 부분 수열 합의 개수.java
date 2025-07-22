@@ -6,14 +6,16 @@ class Solution {
         System.arraycopy(elements, 0, circle, 0, len);
         System.arraycopy(elements, 0, circle, len, len);
 
+        int[] dp = new int[2 * len + 1];
+        for (int i = 0; i < 2 * len; i++) {
+            dp[i+1] = dp[i] + circle[i];
+        }
+        
         Set<Integer> set = new HashSet<>();
+        
         for (int k = 1; k <= len; k++) {
             for (int i = 0; i < len; i++) {
-                int sum = 0;
-                for (int j = 0; j < k; j++) {
-                    sum += circle[i+j];
-                }
-                set.add(sum);
+                set.add(dp[i + k] - dp[i]);
             }
         }
         return set.size();
