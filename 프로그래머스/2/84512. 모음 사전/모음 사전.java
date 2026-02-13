@@ -16,6 +16,6 @@ class Solution {
         for (String s : str) {
             answer += cnt[idx++]*map.get(s);
         }
-        return answer+str.length;
+        return answer+word.length();
     }
 }
