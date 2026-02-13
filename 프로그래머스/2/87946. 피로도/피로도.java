@@ -8,6 +8,7 @@ class Solution {
         dfs(k, 0, dungeons);
         return answer;
     }
+    
     static void dfs(int tired, int cnt, int[][] dungeons) {
         for (int i = 0; i < dungeons.length; i++) {
             if (!visit[i] && dungeons[i][0] <= tired) {
