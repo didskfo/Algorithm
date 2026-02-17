@@ -2,6 +2,7 @@ import java.util.*;
 
 class Solution {
     public int solution(int[][] triangle) {
+        int answer = 0;
         int[][] dp = new int[triangle.length][];
         for (int i = 0; i < dp.length; i++) {
             dp[i] = new int[triangle[i].length];
