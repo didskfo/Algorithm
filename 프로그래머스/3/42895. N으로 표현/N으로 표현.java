@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public int solution(int N, int number) {
-        if (number == N) return 1;
+        if (N == number) return 1;
         ArrayList<HashSet<Integer>> dp = new ArrayList<>();
         for (int i = 0; i <= 8; i++) {
             dp.add(new HashSet<>());
