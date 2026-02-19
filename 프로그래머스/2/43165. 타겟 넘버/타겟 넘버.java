@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     static int answer = 0;
     public int solution(int[] numbers, int target) {
@@ -8,14 +6,12 @@ class Solution {
         return answer;
     }
     
-    static void dfs(int n, int[] numbers, int target, int num) {
-        if (n == numbers.length) {
-            if (num == target) {
-                answer++;
-            }
+    static void dfs(int len, int[] numbers, int target, int num) {
+        if (len == numbers.length) {
+            if (num == target) answer++;
             return;
         }
-        dfs(n+1, numbers, target, num+numbers[n]);
-        dfs(n+1, numbers, target, num-numbers[n]);
+        dfs(len+1, numbers, target, num+numbers[len]);
+        dfs(len+1, numbers, target, num-numbers[len]);
     }
 }
