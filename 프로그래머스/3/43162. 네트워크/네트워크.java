@@ -1,9 +1,10 @@
 import java.util.*;
 
 class Solution {
-    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static boolean[] visit;
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     public int solution(int n, int[][] computers) {
+        int answer = 0;
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<>());
         }
@@ -16,7 +17,6 @@ class Solution {
             }
         }
         visit = new boolean[n];
-        int answer = 0;
         for (int i = 0; i < n; i++) {
             if (!visit[i]) {
                 answer++;
