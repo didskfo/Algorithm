@@ -8,6 +8,7 @@ class Solution {
         visit = new boolean[maps.length][maps[0].length];
         return bfs(maps);
     }
+    
     static int bfs(int[][] maps) {
         visit[0][0] = true;
         Queue<int[]> que = new LinkedList<>();
@@ -23,9 +24,9 @@ class Solution {
             for (int i = 0; i < 4; i++) {
                 int nx = x+dx[i];
                 int ny = y+dy[i];
-                if (nx>=0 && ny>=0 && nx<maps.length && ny<maps[0].length && maps[nx][ny]==1 && !visit[nx][ny]) {
-                    visit[nx][ny] = true;
+                if (nx >= 0 && nx < maps.length && ny >= 0 && ny < maps[0].length && maps[nx][ny] == 1 && !visit[nx][ny]) {
                     que.add(new int[]{nx, ny, cnt+1});
+                    visit[nx][ny] = true;
                 }
             }
         }
