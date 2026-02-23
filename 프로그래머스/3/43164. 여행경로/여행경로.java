@@ -9,15 +9,16 @@ class Solution {
         Collections.sort(list);
         return list.get(0).split(" ");
     }
-    static void dfs(int cnt, String start, String dest, String[][] tickets) {
+    
+    static void dfs(int cnt, String start, String end, String[][] tickets) {
         if (cnt == tickets.length) {
-            list.add(dest);
+            list.add(end);
             return;
         }
         for (int i = 0; i < tickets.length; i++) {
             if (tickets[i][0].equals(start) && !visit[i]) {
                 visit[i] = true;
-                dfs(cnt+1, tickets[i][1], dest+" "+tickets[i][1], tickets);
+                dfs(cnt+1, tickets[i][1], end+" "+tickets[i][1], tickets);
                 visit[i] = false;
             }
         }
