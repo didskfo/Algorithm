@@ -4,22 +4,22 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 
 class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int K = Integer.parseInt(br.readLine());
-        Stack<Integer> st = new Stack<>();
-        int ans = 0;
-        for (int k = 0; k < K; k++) {
-            int a = Integer.parseInt(br.readLine());
-            if (a == 0) {
-                st.pop();
+        Stack<Integer> stack = new Stack<>();
+        int answer = 0;
+        while (K-- > 0) {
+            int n = Integer.parseInt(br.readLine());
+            if (n == 0) {
+                stack.pop();
             } else {
-                st.push(a);
+                stack.add(n);
             }
         }
-        while (!st.isEmpty()) {
-            ans += st.pop();
+        while (!stack.isEmpty()) {
+            answer += stack.pop();
         }
-        System.out.println(ans);
+        System.out.println(answer);
     }
 }
