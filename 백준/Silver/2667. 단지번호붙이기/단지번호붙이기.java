@@ -1,53 +1,56 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Queue;
 
 class Main {
-    public static String[][] graph;
-    public static int[] dx = {-1, 0, 0, 1};
-    public static int[] dy = {0, 1, -1, 0};
-    public static int n;
-    public static void main(String[] args) throws IOException{
+    static char[][] map;
+    static int[] dx = {-1, 0, 0, 1};
+    static int[] dy = {0, -1, 1, 0};
+    static int N;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
-        graph = new String[n][n];
-        List<Integer> lst = new ArrayList<>();
-        for (int t = 0; t < n; t++) {
-            String input = br.readLine();
-            for (int k = 0; k < n; k++) {
-                graph[t][k] = String.valueOf(input.charAt(k));
-            }
+        N = Integer.parseInt(br.readLine());
+        map = new char[N][N];
+        for (int i = 0; i < N; i++) {
+            map[i] = br.readLine().toCharArray();
         }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (graph[i][j].equals("1")) {
-                    lst.add(bfs(i, j));
+        int answer = 0;
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (map[i][j] == '1') {
+                    answer++;
+                    arr.add(bfs(i, j));
                 }
             }
         }
-        Collections.sort(lst);
-        System.out.println(lst.size());
-        for (int i = 0; i < lst.size(); i++) {
-            System.out.println(lst.get(i));
+        System.out.println(answer);
+        Collections.sort(arr);
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
         }
     }
-    public static int bfs(int a, int b) {
+
+    static int bfs(int a, int b) {
+        Queue<int[]> que = new ArrayDeque<>();
+        que.offer(new int[]{a, b});
+        map[a][b] = '0';
         int cnt = 1;
-        graph[a][b] = "0";
-        Queue<int[]> que = new LinkedList<int[]>();
-        que.add(new int[]{a, b});
         while (!que.isEmpty()) {
             int[] cur = que.poll();
             int x = cur[0];
             int y = cur[1];
             for (int i = 0; i < 4; i++) {
-                int nx = x+dx[i];
-                int ny = y+dy[i];
-                if (nx >= 0 && nx < n && ny >= 0 && ny < n && graph[nx][ny].equals("1")) {
-                    graph[nx][ny] = "0";
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                if (nx >= 0 && nx < N && ny >= 0 && ny < N && map[nx][ny] == '1') {
+                    que.offer(new int[]{nx, ny});
+                    map[nx][ny] = '0';
                     cnt++;
-                    que.add(new int[]{nx, ny});
                 }
             }
         }
