@@ -1,37 +1,48 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 class Main {
-    public static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
-    public static boolean[] visit;
-    public static int cnt = 0;
-    public static void main(String[] args) throws IOException{
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static boolean[] visit;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
-        for (int i = 0; i < n+1; i++) {
+        StringTokenizer st;
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+        for (int i = 0; i <= N; i++) {
             graph.add(new ArrayList<>());
         }
-        visit = new boolean[n+1];
-        for (int t = 0; t < m; t++) {
-            String[] input = br.readLine().split(" ");
-            int a = Integer.parseInt(input[0]);
-            int b = Integer.parseInt(input[1]);
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
             graph.get(a).add(b);
             graph.get(b).add(a);
         }
-        dfs(1);
-        System.out.println(cnt-1);
+        visit = new boolean[N+1];
+        System.out.println(bfs(1));
     }
-    public static void dfs(int start) {
+    
+    static int bfs(int start) {
+        Queue<Integer> que = new ArrayDeque<>();
+        que.add(start);
         visit[start] = true;
-        cnt++;
-        for (int i : graph.get(start)) {
-            if (!visit[i]) {
-                dfs(i);
+        int cnt = 0;
+        while (!que.isEmpty()) {
+            int cur = que.poll();
+            for (int n : graph.get(cur)) {
+                if (!visit[n]) {
+                    que.add(n);
+                    visit[n] = true;
+                    cnt++;
+                }
             }
         }
+        return cnt;
     }
 }
