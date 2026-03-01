@@ -1,27 +1,28 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] input = br.readLine().split("-");
-        List<Integer> lst = new ArrayList<>();
-        for (String str : input) {
-            String[] num = str.split("\\+");
-            int sum = 0;
-            for (String a : num) {
-                sum += Integer.parseInt(a);
+        int[] sum = new int[input.length];
+        for (int i = 0; i < input.length; i++) {
+            int n = 0;
+            if (input[i].contains("+")) {
+                String[] num = input[i].split("\\+");
+                for (int j = 0; j < num.length; j++) {
+                    n += Integer.parseInt(num[j]);
+                }
+            } else {
+                n = Integer.parseInt(input[i]);
             }
-            lst.add(sum);
+            sum[i] = n;
         }
-
-        int ans = lst.get(0);
-        for (int i = 1; i < lst.size(); i++) {
-            ans -= lst.get(i);
+        int answer = sum[0];
+        for (int i = 1; i < sum.length; i++) {
+            answer -= sum[i];
         }
-        System.out.println(ans);
+        System.out.println(answer);
     }
 }
