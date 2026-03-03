@@ -3,22 +3,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int cnt = 0;
-        String num = "666";
-        int number = 666;
-        while (true) {
-            String a = Integer.toString(number);
-            if (a.contains(num)) {
+        int N = Integer.parseInt(br.readLine());
+        String six = "666";
+        int num = 666;
+        int cnt = 1;
+        while (cnt != N) {
+            num++;
+            if (Integer.toString(num).contains(six)) {
                 cnt++;
             }
-            if (cnt == n) {
-                System.out.println(number);
-                break;
-            }
-            number++;
         }
+        System.out.println(num);
     }
 }
