@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 class Main {
-    public static String[] black = {
+    static String[] black = {
         "BWBWBWBW",
         "WBWBWBWB",
         "BWBWBWBW",
@@ -11,9 +12,9 @@ class Main {
         "BWBWBWBW",
         "WBWBWBWB",
         "BWBWBWBW",
-        "WBWBWBWB",
+        "WBWBWBWB"
     };
-    public static String[] white = {
+    static String[] white = {
         "WBWBWBWB",
         "BWBWBWBW",
         "WBWBWBWB",
@@ -21,40 +22,36 @@ class Main {
         "WBWBWBWB",
         "BWBWBWBW",
         "WBWBWBWB",
-        "BWBWBWBW",
+        "BWBWBWBW"
     };
-    public static String[] graph;
-    public static void main(String[] args) throws IOException{
+    static String[] input;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
-        graph = new String[n];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        input = new String[N];
         int min = 64;
-        for (int i = 0; i < n; i++) {
-            graph[i] = br.readLine();
+        for (int i = 0; i < N; i++) {
+            input[i] = br.readLine();
         }
-        for (int i = 0; i < n-7; i++) {
-            for (int j = 0; j < m-7; j++) {
-                int cnt = count(i, j);
-                min = Math.min(cnt, min);
+        for (int i = 0; i < N-7; i++) {
+            for (int j = 0; j < M-7; j++) {
+                min = Math.min(count(i, j), min);
             }
         }
         System.out.println(min);
     }
-    public static int count(int x, int y) {
-        int cnt_b = 0;
-        int cnt_w = 0;
+
+    static int count(int x, int y) {
+        int cnt_black = 0;
+        int cnt_white = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (black[i].charAt(j) != graph[i+x].charAt(j+y)) {
-                    cnt_b++;
-                }
-                if (white[i].charAt(j) != graph[i+x].charAt(j+y)) {
-                    cnt_w++;
-                }
+                if (black[i].charAt(j) != input[x+i].charAt(y+j)) cnt_black++;
+                if (white[i].charAt(j) != input[x+i].charAt(y+j)) cnt_white++;
             }
         }
-        return Math.min(cnt_w, cnt_b);
+        return Math.min(cnt_black, cnt_white);
     }
 }
