@@ -1,27 +1,32 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.StringTokenizer;
 
 class Main {
-    public static void main(String[] args) throws IOException{
+    static int M, N;
+    static int[][] box;
+    static int[] dx = {-1, 0, 0, 1};
+    static int[] dy = {0, -1, 1, 0};
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int m = Integer.parseInt(input[0]);
-        int n = Integer.parseInt(input[1]);
-        Integer[][] graph = new Integer[n][m];
-        Queue<int[]> que = new LinkedList<>();
-        int[] dx = {-1, 0, 0, 1};
-        int[] dy = {0, -1, 1, 0};
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        box = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < M; j++) {
+                box[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-        for (int i = 0; i < n; i++) {
-            String[] str = br.readLine().split(" ");
-            for (int j = 0; j < m; j++) {
-                graph[i][j] = Integer.parseInt(str[j]);
-                if (graph[i][j] == 1) {
-                    que.add(new int[]{i, j});
-                }
+        Queue<int[]> que = new ArrayDeque<>();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (box[i][j] == 1) que.add(new int[]{i, j});
             }
         }
 
@@ -30,28 +35,31 @@ class Main {
             int x = cur[0];
             int y = cur[1];
             for (int i = 0; i < 4; i++) {
-                if (x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < m && graph[x+dx[i]][y+dy[i]] == 0) {
-                    que.add(new int[]{x+dx[i], y+dy[i]});
-                    graph[x+dx[i]][y+dy[i]] = graph[x][y]+1;
+                int nx = x+dx[i];
+                int ny = y+dy[i];
+                if (nx>=0 && nx<N && ny>=0 && ny<M && box[nx][ny]==0) {
+                    box[nx][ny] = box[x][y]+1;
+                    que.add(new int[]{nx, ny});
                 }
             }
         }
 
-        boolean err = false;
-        int cnt = 0;
+        boolean check = true;
+        int max = 0;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (graph[i][j] == 0) {
-                    err = true;
-                    break;
-                } else {
-                    cnt = Math.max(cnt, graph[i][j]);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (box[i][j] == 0) {
+                    check = false;
+                } else if (box[i][j] != -1) {
+                    max = Math.max(max, box[i][j]);
                 }
             }
         }
-        
-        if (err) System.out.println(-1);
-        else System.out.println(cnt-1);
+        if (check) {
+            System.out.println(max-1);
+        } else {
+            System.out.println(-1);
+        }
     }
 }
