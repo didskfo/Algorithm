@@ -4,17 +4,17 @@ import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 
 class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int t = 0; t < n; t++) {
+        for (int i = 0; i < N; i++) {
             pq.add(Integer.parseInt(br.readLine()));
         }
         StringBuilder sb = new StringBuilder();
-        while (!pq.isEmpty()) {
-            sb.append(Integer.toString(pq.poll())).append("\n");
+        for (int i = 0; i < N; i++) {
+            sb.append(pq.poll()).append("\n");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }
