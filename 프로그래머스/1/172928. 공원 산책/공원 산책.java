@@ -1,61 +1,73 @@
 class Solution {
     public int[] solution(String[] park, String[] routes) {
         int[] answer = new int[2];
-        int lenX = park.length;
-        int lenY = park[0].length();
-        int curX = -1;
-        int curY = -1;
-        for (int i = 0; i < lenX; i++) {
-            for (int j = 0; j < lenY; j++) {
-                if (park[i].charAt(j) == 'S') {
+        int n = park.length;
+        int m = park[0].length();
+        char[][] map = new char[n][m];
+        int curX = 0, curY = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                map[i][j] = park[i].charAt(j);
+                if (map[i][j] == 'S') {
                     curX = i;
                     curY = j;
                 }
             }
         }
+        
         for (String route : routes) {
-            String[] order = route.split(" ");
-            int len = Integer.parseInt(order[1]);
+            String[] r = route.split(" ");
+            String dir = r[0];
+            int dist = Integer.parseInt(r[1]);
             boolean check = true;
-            if (order[0].equals("E")) {
-                if (curY+len < lenY) {
-                    for (int i = 1; i <= len; i++) {
-                        if (park[curX].charAt(curY+i) == 'X') {
+            
+            if (dir.equals("N")) {
+                if (curX-dist >= 0) {
+                    for (int i = 1; i <= dist; i++) {
+                        if (map[curX-i][curY] == 'X') {
                             check = false;
                             break;
                         }
                     }
-                    if (check) curY += len;
+                    if (check) {
+                        curX -= dist;
+                    }
                 }
-            } else if (order[0].equals("S")) {
-                if (curX+len < lenX) {
-                    for (int i = 1; i <= len; i++) {
-                        if (park[curX+i].charAt(curY) == 'X') {
+            } else if (dir.equals("S")) {
+                if (curX+dist < n) {
+                    for (int i = 1; i <= dist; i++) {
+                        if (map[curX+i][curY] == 'X') {
                             check = false;
                             break;
-                        }
+                        } 
                     }
-                    if (check) curX += len;
+                    if (check) {
+                        curX += dist;
+                    }
                 }
-            } else if (order[0].equals("W")) {
-                if (curY-len >= 0) {
-                    for (int i = 1; i <= len; i++) {
-                        if (park[curX].charAt(curY-i) == 'X') {
+            } else if (dir.equals("W")) {
+                if (curY-dist >= 0) {
+                    for (int i = 1; i <= dist; i++) {
+                        if (map[curX][curY-i] == 'X') {
                             check = false;
                             break;
                         }
                     }
-                    if (check) curY -= len;
+                    if (check) {
+                        curY -= dist;
+                    }
                 }
             } else {
-                if (curX-len >= 0) {
-                    for (int i = 1; i <= len; i++) {
-                        if (park[curX-i].charAt(curY) == 'X') {
+                if (curY+dist < m) {
+                    for (int i = 1; i <= dist; i++) {
+                        if (map[curX][curY+i] == 'X') {
                             check = false;
                             break;
                         }
                     }
-                    if (check) curX -= len;
+                    if (check) {
+                        curY += dist;
+                    }
                 }
             }
         }
