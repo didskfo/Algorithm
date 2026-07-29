@@ -1,27 +1,24 @@
+import java.util.*;
+
 class Solution {
     public int solution(int[] bandage, int health, int[][] attacks) {
         int t = bandage[0];
         int x = bandage[1];
         int y = bandage[2];
         int max = health;
-        int curr = 0;
+        int cur = 0;
         
         for (int[] attack : attacks) {
-            int atk = attack[0];
-            int dmg = attack[1];
-
-            int time = atk - curr - 1;
+            int time = attack[0] - cur - 1;
             if (time > 0) {
-                int heal = time * x + (time/t) * y;
-                health = Math.min(max, health + heal);
+                int h = time*x + (time/t)*y;
+                health = Math.min(max, health+h);
             }
-
-            health -= dmg;
-            if (health <= 0) {
-                return -1;       
-            }
-
-            curr = atk;
+            
+            health -= attack[1];
+            if (health <= 0) return -1;
+            
+            cur = attack[0];
         }
         return health;
     }
