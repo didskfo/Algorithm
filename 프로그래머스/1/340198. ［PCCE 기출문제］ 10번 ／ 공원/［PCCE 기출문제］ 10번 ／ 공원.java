@@ -1,25 +1,29 @@
 import java.util.*;
+
 class Solution {
     public int solution(int[] mats, String[][] park) {
+        int answer = -1;
         Arrays.sort(mats);
-        for (int k = mats.length-1; k >= 0; k--) {
-            int m = mats[k];
-            for (int i = 0; i < park.length; i++) {
-                for (int j = 0; j < park[0].length; j++) {
-                    if (park[i][j].equals("-1")) {
-                        boolean c = check(park, i, j, m);
-                        if (c) return m;
+        for (int i = 0; i < park.length; i++) {
+            for (int j = 0; j < park[0].length; j++) {
+                if (park[i][j].equals("-1")) {
+                    for (int l = mats.length-1; l >= 0; l--) {
+                        if (check(i, j, mats[l], park)) {
+                            answer = Math.max(answer, mats[l]);
+                            break;
+                        }
                     }
                 }
             }
         }
-        return -1;
+        return answer;
     }
     
-    private boolean check(String[][] park, int x, int y, int len) {
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                if (x+i >= park.length || y+j >= park[0].length || !park[x+i][y+j].equals("-1")) return false;
+    static boolean check(int x, int y, int len, String[][] park) {
+        for (int i = x; i < x+len; i++) {
+            for (int j = y; j < y+len; j++) {
+                if (i>=park.length || j>=park[0].length) return false;
+                if (!park[i][j].equals("-1")) return false;
             }
         }
         return true;
