@@ -1,25 +1,33 @@
 import java.util.*;
+
 class Solution {
     public int[][] solution(int[][] data, String ext, int val_ext, String sort_by) {
-        String[] str = {"code", "date", "maximum", "remain"};
-        int extIdx = Arrays.asList(str).indexOf(ext);
-        int sortIdx = Arrays.asList(str).indexOf(sort_by);
-        ArrayList<int[]> list = new ArrayList<>();
+        ArrayList<int[]> lst = new ArrayList<>();
+        int idx = -1;
+        if (ext.equals("code")) idx = 0;
+        else if (ext.equals("date")) idx = 1;
+        else if (ext.equals("maximum")) idx = 2;
+        else idx = 3;
         
-        for (int[] d : data) {
-            if (d[extIdx] < val_ext) {
-                list.add(d);
-            }
+        for (int i = 0; i < data.length; i++) {
+            if (data[i][idx] < val_ext) lst.add(data[i]);
         }
         
-        Collections.sort(list, new Comparator<int[]>() {
+        int sort_idx = -1;
+        if (sort_by.equals("code")) sort_idx = 0;
+        else if (sort_by.equals("date")) sort_idx = 1;
+        else if (sort_by.equals("maximum")) sort_idx = 2;
+        else sort_idx = 3;
+        
+        final int sortIdx = sort_idx;
+        
+        lst.sort(new Comparator<int[]>() {
             @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[sortIdx] - o2[sortIdx];
+            public int compare(int[] a, int[] b) {
+                return a[sortIdx] - b[sortIdx];
             }
         });
         
-        int[][] answer = list.toArray(int[][]::new);
-        return answer;
+        return lst.toArray(new int[0][]);
     }
 }
