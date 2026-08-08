@@ -3,30 +3,33 @@ import java.util.*;
 class Solution {
     static int[] dx = {-1, 0, 0, 1};
     static int[] dy = {0, -1, 1, 0};
-    static boolean[][] visit;
+    static boolean[][] visited;
     public int solution(int[][] maps) {
-        visit = new boolean[maps.length][maps[0].length];
-        return bfs(maps);
+        int answer = bfs(maps);
+        return answer;
     }
     
     static int bfs(int[][] maps) {
-        visit[0][0] = true;
-        Queue<int[]> que = new LinkedList<>();
-        que.add(new int[]{0, 0, 1});
+        int n = maps.length;
+        int m = maps[0].length;
+        visited = new boolean[n][m];
+        Queue<int[]> que = new ArrayDeque<>();
+        que.offer(new int[]{0, 0, 1});
         while (!que.isEmpty()) {
             int[] cur = que.poll();
             int x = cur[0];
             int y = cur[1];
             int cnt = cur[2];
-            if (x == maps.length-1 && y == maps[0].length-1) {
+            if (x == n-1 && y == m-1) {
                 return cnt;
             }
+            
             for (int i = 0; i < 4; i++) {
                 int nx = x+dx[i];
                 int ny = y+dy[i];
-                if (nx >= 0 && nx < maps.length && ny >= 0 && ny < maps[0].length && maps[nx][ny] == 1 && !visit[nx][ny]) {
-                    que.add(new int[]{nx, ny, cnt+1});
-                    visit[nx][ny] = true;
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m && maps[nx][ny] != 0 && !visited[nx][ny]) {
+                    que.offer(new int[]{nx, ny, cnt+1});
+                    visited[nx][ny] = true;
                 }
             }
         }
