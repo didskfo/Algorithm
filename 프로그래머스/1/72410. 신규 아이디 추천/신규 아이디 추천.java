@@ -1,17 +1,40 @@
+import java.util.*;
+
 class Solution {
     public String solution(String new_id) {
         new_id = new_id.toLowerCase();
-        new_id = new_id.replaceAll("[^a-z0-9._-]", "");
-        new_id = new_id.replaceAll("\\.{2,}", ".");
-        new_id = new_id.replaceAll("^[.]|[.]$", "");
-        if (new_id.equals("")) new_id = "a";
-        else if (new_id.length() >= 16) {
-            new_id = new_id.substring(0, 15);
-            if (new_id.charAt(14) == '.') new_id = new_id.substring(0, 14);
+        
+        StringBuilder sb = new StringBuilder();
+        boolean prevDot = false;
+        
+        for (int i = 0; i < new_id.length(); i++) {
+            char c = new_id.charAt(i);
+            if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '.')) continue;
+            
+            if (c == '.') {
+                if (prevDot) continue;
+                prevDot = true;
+            } else {
+                prevDot = false;
+            }
+            
+            sb.append(c);
         }
-        while (new_id.length() <= 2) {
-            new_id += new_id.charAt(new_id.length()-1);
+        
+        if (sb.length() > 0 && sb.charAt(0) == '.') sb.deleteCharAt(0);
+        if (sb.length() > 0 && sb.charAt(sb.length()-1) == '.') sb.deleteCharAt(sb.length()-1);
+        
+        if (sb.length() == 0) sb.append('a');
+        
+        if (sb.length() >= 16) {
+            sb.setLength(15);
+            if (sb.charAt(14) == '.') sb.deleteCharAt(14);
         }
-        return new_id;
+        
+        while (sb.length() < 3) {
+            sb.append(sb.charAt(sb.length()-1));
+        }
+        
+        return sb.toString();
     }
 }
