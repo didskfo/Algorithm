@@ -4,6 +4,7 @@ class Solution {
     public int solution(int[][] board, int[] moves) {
         int answer = 0;
         Deque<Integer> que = new ArrayDeque<>();
+        
         for (int m : moves) {
             for (int i = 0; i < board.length; i++) {
                 if (board[i][m-1] != 0) {
@@ -12,12 +13,12 @@ class Solution {
                     break;
                 }
             }
+            
             if (que.size() >= 2) {
                 int a = que.removeLast();
                 int b = que.removeLast();
-                if (a == b) {
-                    answer += 2;
-                } else {
+                if (a == b) answer += 2;
+                else {
                     que.add(b);
                     que.add(a);
                 }
