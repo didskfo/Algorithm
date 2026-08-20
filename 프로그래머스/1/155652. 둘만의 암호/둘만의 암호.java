@@ -1,4 +1,3 @@
-import java.util.*;
 class Solution {
     public String solution(String s, String skip, int index) {
         String answer = "";
@@ -14,10 +13,12 @@ class Solution {
         
         String str = new String(alpha);
         for (int i = 0; i < s.length(); i++) {
-            char cur = s.charAt(i);
-            int idx = str.indexOf(cur);
+            char c = s.charAt(i);
+            int idx = str.indexOf(c);
             answer += alpha[(idx+index)%alpha.length];
         }
+    
         return answer;
     }
+    
 }
