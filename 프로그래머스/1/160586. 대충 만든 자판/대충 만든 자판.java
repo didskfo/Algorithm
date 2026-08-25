@@ -1,35 +1,32 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(String[] keymap, String[] targets) {
         int[] answer = new int[targets.length];
-        int idx = 0;
-        for (String target : targets) {
+        
+        int[] minCnt = new int[26];
+        Arrays.fill(minCnt, Integer.MAX_VALUE);
+        for (String key : keymap) {
+            for (int i = 0; i < key.length(); i++) {
+                int c = key.charAt(i)-'A';
+                minCnt[c] = Math.min(minCnt[c], i+1);
+            }
+        }
+        
+        for (int i = 0; i < targets.length; i++) {
+            String target = targets[i];
             int cnt = 0;
-            for (int i = 0; i < target.length(); i++) {
-                char t = target.charAt(i);
-                int a = 101;
-                boolean check = false;
-                for (String key : keymap) {
-                    int c = count(key, t);
-                    if (c != -1) {
-                        a = Math.min(a, c);
-                        check = true;
-                    }
-                }
-                if (check) cnt += a;
-                else {
+            for (int j = 0; j < target.length(); j++) {
+                if (minCnt[target.charAt(j)-'A'] == Integer.MAX_VALUE) {
                     cnt = -1;
                     break;
-                }
+                } 
+            
+                cnt += minCnt[target.charAt(j)-'A'];
             }
-            answer[idx++] = cnt;
+            
+            answer[i] = cnt;
         }
         return answer;
-    }
-    
-    static int count(String key, char find) {
-        for (int i = 0; i < key.length(); i++) {
-            if (key.charAt(i) == find) return i+1;
-        }
-        return -1;
     }
 }
