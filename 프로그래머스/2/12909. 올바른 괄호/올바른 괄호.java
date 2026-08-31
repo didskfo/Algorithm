@@ -2,17 +2,22 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        Deque<Character> que = new ArrayDeque<>();
-        char[] str = s.toCharArray();
-        for (char c : str) {
-            if (c == '(') {
-                que.offer(c);
+        boolean answer = true;
+        
+        Stack<Character> st = new Stack<>();
+        char[] sArr = s.toCharArray();
+        
+        for (char a : sArr) {
+            if (a == '(') {
+                st.push(a);
             } else {
-                if (que.isEmpty()) return false;
-                que.poll();
+                if (st.empty()) return false;
+                st.pop();
             }
         }
-        if (!que.isEmpty()) return false;
-        return true;
+        
+        if (!st.empty()) return false;
+
+        return answer;
     }
 }
