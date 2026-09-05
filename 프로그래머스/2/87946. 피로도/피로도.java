@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     static boolean[] visit;
     static int answer = 0;
@@ -17,6 +15,7 @@ class Solution {
                 visit[i] = false;
             }
         }
+        
         answer = Math.max(answer, cnt);
     }
 }
