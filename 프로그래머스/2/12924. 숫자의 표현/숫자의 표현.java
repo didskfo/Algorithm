@@ -1,7 +1,8 @@
 class Solution {
     public int solution(int n) {
-        int answer = 0;
-        int low = 1; int high = 1;
+        int answer = 0;        
+        int low = 1;
+        int high = 1;
         int sum = 1;
         while (low <= n) {
             if (sum == n) {
@@ -16,6 +17,7 @@ class Solution {
                 low++;
             }
         }
+        
         return answer;
     }
 }
