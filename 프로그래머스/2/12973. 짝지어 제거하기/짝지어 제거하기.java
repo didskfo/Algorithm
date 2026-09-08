@@ -1,18 +1,23 @@
 import java.util.*;
+
 class Solution
 {
     public int solution(String s)
     {
-        char[] str = s.toCharArray();
-        Deque<Character> que = new ArrayDeque<>();
-        for (int i = 0; i < str.length; i++) {
-            if (que.isEmpty() || que.getLast() != str[i]) {
-                que.add(str[i]);
+        Stack<Character> st = new Stack<>();
+        char[] arr = s.toCharArray();
+        for (char a : arr) {
+            if (st.isEmpty()) {
+                st.push(a);
             } else {
-                que.removeLast();
-            } 
+                if (st.peek() == a) {
+                    st.pop();
+                } else {
+                    st.push(a);
+                }
+            }
         }
-        if (que.isEmpty()) return 1;
-        else return 0;
+        if (st.isEmpty()) return 1;
+        return 0;
     }
 }
