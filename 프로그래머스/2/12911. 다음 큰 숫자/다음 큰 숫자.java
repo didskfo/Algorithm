@@ -1,10 +1,22 @@
 class Solution {
     public int solution(int n) {
-        int answer = n+1;
-        int cnt = Integer.bitCount(n);
-        while (Integer.bitCount(answer) != cnt) {
-            answer++;
+        String str = Integer.toBinaryString(n);
+        int cnt = count(str);
+        int number = n+1;
+        while (true) {
+            if (count(Integer.toBinaryString(number)) == cnt) {
+                break;
+            } 
+            number++;
         }
-        return answer;
+        return number;
+    }
+    
+    static int count(String str) {
+        int cnt = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '1') cnt++;
+        }
+        return cnt;
     }
 }
