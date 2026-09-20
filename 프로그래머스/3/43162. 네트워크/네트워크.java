@@ -2,11 +2,11 @@ import java.util.*;
 
 class Solution {
     static boolean[] visit;
-    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static List<List<Integer>> graph = new ArrayList<>();
     
     public int solution(int n, int[][] computers) {
         int answer = 0;
-        
+        visit = new boolean[n];
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<>());
         }
@@ -20,14 +20,12 @@ class Solution {
             }
         }
         
-        visit = new boolean[n];
         for (int i = 0; i < n; i++) {
             if (!visit[i]) {
                 answer++;
                 bfs(i);
             }
         }
-        
         return answer;
     }
     
@@ -35,11 +33,12 @@ class Solution {
         visit[start] = true;
         Queue<Integer> que = new ArrayDeque<>();
         que.offer(start);
+        
         while (!que.isEmpty()) {
             int cur = que.poll();
             for (int a : graph.get(cur)) {
                 if (!visit[a]) {
-                    que.add(a);
+                    que.offer(a);
                     visit[a] = true;
                 }
             }
