@@ -1,8 +1,9 @@
 import java.util.*;
 
 class Solution {
-    static boolean[] visit;
     static ArrayList<String> list = new ArrayList<>();
+    static boolean[] visit;
+    
     public String[] solution(String[][] tickets) {
         visit = new boolean[tickets.length];
         dfs(0, "ICN", "ICN", tickets);
@@ -15,6 +16,7 @@ class Solution {
             list.add(end);
             return;
         }
+        
         for (int i = 0; i < tickets.length; i++) {
             if (tickets[i][0].equals(start) && !visit[i]) {
                 visit[i] = true;
