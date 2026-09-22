@@ -3,11 +3,10 @@ class Solution {
         int[] answer = new int[(int)(right-left+1)];
         int idx = 0;
         for (long k = left; k <= right; k++) {
-            int i = (int)(k / n);
-            int j = (int)(k % n);
-            answer[idx++] = Math.max(i, j)+1;
+            int i = (int)(k/n)+1;
+            int j = (int)(k%n)+1;
+            answer[idx++] = Math.max(i, j);
         }
-        
         return answer;
     }
 }
