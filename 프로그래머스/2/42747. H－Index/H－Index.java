@@ -3,12 +3,17 @@ import java.util.*;
 class Solution {
     public int solution(int[] citations) {
         Arrays.sort(citations);
-        
-        for (int i = 0; i < citations.length; i++) {
-            if (i+1 >= citations[citations.length-i-1]) {
-                return Math.max(i, citations[citations.length-i-1]);
+
+        int n = citations.length;
+
+        for (int i = 0; i < n; i++) {
+            int h = n - i;
+
+            if (citations[i] >= h) {
+                return h;
             }
         }
-        return citations.length;
+
+        return 0;
     }
 }
