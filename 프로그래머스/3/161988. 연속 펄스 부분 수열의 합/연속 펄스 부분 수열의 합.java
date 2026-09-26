@@ -10,7 +10,7 @@ class Solution {
         long answer = Math.max(even[0], odd[0]);
         
         for (int i = 1; i < n; i++) {
-            long a = (i % 2 == 0) ? sequence[i] : -sequence[i];
+            long a = (i%2 == 0) ? sequence[i] : -sequence[i];
             long b = -a;
             
             even[i] = Math.max(even[i-1]+a, a);
