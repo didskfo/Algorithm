@@ -5,7 +5,7 @@ class Solution {
             for (int j = 0; j < arr2[0].length; j++) {
                 int sum = 0;
                 for (int k = 0; k < arr2.length; k++) {
-                    sum += arr1[i][k]*arr2[k][j];
+                    sum += arr1[i][k] * arr2[k][j];
                 }
                 answer[i][j] = sum;
             }
