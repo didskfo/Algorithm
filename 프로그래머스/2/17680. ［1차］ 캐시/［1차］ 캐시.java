@@ -1,25 +1,21 @@
 import java.util.*;
+
 class Solution {
     public int solution(int cacheSize, String[] cities) {
         int answer = 0;
-        List<String> lst = new ArrayList<>();
+        ArrayList<String> cache = new ArrayList<>();
+        
         for (String city : cities) {
             city = city.toLowerCase();
-            int idx = lst.indexOf(city);
+            int idx = cache.indexOf(city);
             if (idx != -1) {
-                answer++;
-                lst.remove(idx);
-                lst.add(city);
+                answer += 1;
+                cache.remove(city);
+                cache.add(city);
             } else {
-                answer+=5;
-                if (cacheSize > 0) {
-                    if (lst.size() < cacheSize) {
-                        lst.add(city);
-                    } else {
-                        if (lst.size() > 0) lst.remove(0);
-                        lst.add(city);
-                    }
-                }
+                answer += 5;
+                cache.add(city);
+                if (cache.size() > cacheSize) cache.remove(0);
             }
         }
         return answer;
