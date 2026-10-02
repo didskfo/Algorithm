@@ -4,9 +4,10 @@ class Solution {
     static int[] parent;
     public int solution(int n, int[][] costs) {
         int answer = 0;
-        Arrays.sort(costs, (c1, c2) -> c1[2] - c2[2]);
+        Arrays.sort(costs, (a, b) -> Integer.compare(a[2], b[2]));
         
         parent = new int[n];
+        
         for (int i = 0; i < n; i++) {
             parent[i] = i;
         }
@@ -30,10 +31,10 @@ class Solution {
     }
     
     static void union(int a, int b) {
-        a = find(a);
-        b = find(b);
+        int pa = find(a);
+        int pb = find(b);
         
-        if (a > b) parent[a] = b;
-        else parent[b] = a;
+        if (pa > pb) parent[pa] = pb;
+        else parent[pb] = pa;
     }
 }
