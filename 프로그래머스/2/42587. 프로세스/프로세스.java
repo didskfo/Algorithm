@@ -5,16 +5,16 @@ class Solution {
         int answer = 0;
         Queue<int[]> que = new ArrayDeque<>();
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-        int idx = 0;
-        for (int p : priorities) {
-            que.add(new int[]{p, idx++});
-            pq.add(p);
+        
+        for (int i = 0; i < priorities.length; i++) {
+            que.offer(new int[]{priorities[i], i});
+            pq.offer(priorities[i]);
         }
         
         while (true) {
             int[] cur = que.poll();
             if (cur[0] < pq.peek()) {
-                que.add(cur);
+                que.offer(cur);
             } else {
                 pq.poll();
                 answer++;
@@ -22,7 +22,7 @@ class Solution {
                     break;
                 }
             }
-        }
+        } 
         return answer;
     }
 }
