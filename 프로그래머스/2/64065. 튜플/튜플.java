@@ -1,17 +1,21 @@
 import java.util.*;
+
 class Solution {
     public int[] solution(String s) {
-        String body = s.substring(2, s.length() - 2);
-        String[] groups = body.split("\\},\\{");
+        s = s.substring(2, s.length()-2);
+        String[] list = s.split("\\},\\{");
         List<List<Integer>> lst = new ArrayList<>();
-        for (String grp : groups) {
-            String[] tokens = grp.split(",");
-            List<Integer> row = new ArrayList<>(tokens.length);
-            for (String tok : tokens) {
-                row.add(Integer.valueOf(tok));
+        for (String str : list) {
+            String[] tuple = str.split(",");
+            List<Integer> row = new ArrayList<>(tuple.length);
+            
+            for (String t : tuple) {
+                row.add(Integer.parseInt(t));
             }
+            
             lst.add(row);
         }
+        
         lst.sort(Comparator.comparingInt(List::size));
         Set<Integer> set = new LinkedHashSet<>();
         for (int i = 0; i < lst.size(); i++) {
@@ -20,9 +24,10 @@ class Solution {
                 set.add(l.get(j));
             }
         }
+        
         int[] answer = set.stream()
-             .mapToInt(Integer::intValue)
-             .toArray();
+            .mapToInt(Integer::intValue)
+            .toArray();
         return answer;
     }
 }
