@@ -1,12 +1,13 @@
 import java.util.*;
+
 class Solution {
     public int[] solution(int[] numbers) {
-        int len = numbers.length;
-        int[] answer = new int[len];
+        int n = numbers.length;
+        int[] answer = new int[n];
         Arrays.fill(answer, -1);
-        Deque<Integer> stack = new ArrayDeque<>();
+        Stack<Integer> stack = new Stack<>();
         
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < n; i++) {
             while (!stack.isEmpty() && numbers[stack.peek()] < numbers[i]) {
                 int j = stack.pop();
                 answer[j] = numbers[i];
