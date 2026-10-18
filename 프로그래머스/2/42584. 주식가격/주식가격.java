@@ -1,18 +1,16 @@
-import java.util.*;
-
 class Solution {
     public int[] solution(int[] prices) {
-        int[] answer = new int[prices.length];
-        for (int i = 0; i < prices.length; i++) {
+        int n = prices.length;
+        int[] answer = new int[n];
+        
+        for (int i = 0; i < n-1; i++) {
             int cur = prices[i];
-            int cnt = 0;
-            for (int j = i+1; j < prices.length; j++) {
-                cnt++;
-                if (cur > prices[j]) {
-                    break;
-                } 
+            int sec = 0;
+            for (int j = i+1; j < n; j++) {
+                sec++;
+                if (cur > prices[j]) break;
             }
-            answer[i] = cnt;
+            answer[i] = sec;
         }
         return answer;
     }
