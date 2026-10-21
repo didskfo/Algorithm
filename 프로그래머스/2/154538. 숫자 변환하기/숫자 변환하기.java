@@ -1,25 +1,28 @@
 import java.util.*;
+
 class Solution {
     public int solution(int x, int y, int n) {
-        int answer = -1;
         if (x == y) return 0;
-        int[] dist = new int[y+1];
-        Arrays.fill(dist, -1);
-        Deque<Integer> que = new ArrayDeque<>();
-        que.add(x);
-        dist[x] = 0;
+        int[] dp = new int[y+1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
         
-        while (!que.isEmpty()) {
-            int cur = que.poll();
-            if (cur == y) return dist[cur];
-            int[] arr = {cur+n, cur*2, cur*3};
-            for (int a : arr) {
-                if (a <= y && dist[a] == -1) {
-                    que.add(a);
-                    dist[a] = dist[cur]+1;
-                }
+        dp[x] = 0;
+        for (int i = x; i <= y; i++) {
+            if (dp[i] == Integer.MAX_VALUE) continue;
+            
+            if (i + n <= y) {
+                dp[i+n] = Math.min(dp[i+n], dp[i]+1);
+            }
+            
+            if (i * 2 <= y) {
+                dp[i*2] = Math.min(dp[i*2], dp[i]+1);
+            }
+            
+            if (i * 3 <= y) {
+                dp[i*3] = Math.min(dp[i*3], dp[i]+1);
             }
         }
-        return answer;
+        
+        return dp[y] == Integer.MAX_VALUE ? -1 : dp[y];
     }
 }
